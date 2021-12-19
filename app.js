@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
+const _ = require('lodash');
 
 app.use(bodyParser.urlencoded({extended:true}));
 app.use(express.static("public"));
@@ -49,6 +50,16 @@ app.delete("/articles", function(req, res){
       res.send(err);
     }
   });
+});
+
+app.get("/articles/:article", function(req, res){
+  Article.find({title: {'$regex': req.params.article, $options:'i'}}, function(err, found){
+    if(!err){
+      res.send(found);
+    }else{
+      res.send(err);
+    }
+  })
 });
 
 app.listen(process.env.port || 3000 , function(){
