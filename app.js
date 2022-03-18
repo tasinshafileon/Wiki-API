@@ -4,6 +4,7 @@ const bodyParser = require('body-parser');
 const ejs = require('ejs');
 const mongoose = require('mongoose');
 const _ = require('lodash');
+require('dotenv').config()
 
 app.use(bodyParser.urlencoded({
   extended: true
@@ -11,7 +12,7 @@ app.use(bodyParser.urlencoded({
 app.use(express.static("public"));
 app.set("view engine", "ejs");
 
-mongoose.connect('mongodb://localhost:27017/wikiDB');
+mongoose.connect('mongodb+srv://' + process.env.USER_NAME + ':' + process.env.USER_PASSWORD + '@cluster0.ai3n9.mongodb.net/wiki-api');
 
 const articleSchema = {
   title: "String",
